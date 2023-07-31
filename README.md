@@ -2,9 +2,9 @@
 ## Descripción
 ZupperLink es una herramienta de código abierto diseñada para acortar URLs y realizar pruebas de rendimiento en páginas web. Esta aplicación utiliza diversas librerías de Python para brindar una experiencia completa y funcional.
 ## Funcionalidades Principales
-### 1. Acortador de URLs
+#### 1. Acortador de URLs
 ZupperLink permite a los usuarios acortar URLs largas de manera rápida y sencilla. Al introducir una URL en la interfaz de usuario, la aplicación generará una versión acortada que puede ser compartida de forma más cómoda.
-### 2. Pruebas de Rendimiento Web
+#### 2. Pruebas de Rendimiento Web
 El proyecto ZupperLink también cuenta con una funcionalidad para realizar pruebas de rendimiento en páginas web. Utilizando la librería requests, la aplicación simula usuarios concurrentes que acceden al sitio web objetivo, permitiendo a los usuarios evaluar su rendimiento y tiempo de respuesta.
 
 ## Librerías de Python Utilizadas
