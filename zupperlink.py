@@ -4,6 +4,7 @@ import hashlib,base64,ssl,socket,datetime,os
 import requests,concurrent.futures,time
 import pyshorteners as ps
 import platform as pl
+import ssl, socket
 
 sh = os.system
 
@@ -25,6 +26,52 @@ def banner():
 def short(long_url):
     short_url = ps.Shortener().tinyurl.short(long_url)
     return str(short_url)
+
+def verify_ssl(host):
+    context = ssl.create_default_context()
+    with socket.create_connection((host, 443)) as sock: 
+        with context.wrap_socket(sock, server_hostname=host) as ssl_sock:
+            # obtain certification
+            cert = ssl_sock.getpeercert()
+            cert_expired = datetime.datetime.utcnow() > datetime.datetime.strptime(cert['notAfter'], '%b %d %H:%M:%S %Y %Z')
+            if cert_expired:
+                print(f"{R}[STATUS] {W}El certificado ha caducado.")
+                return False
+            else:
+                print(f"{G}[STATUS] {W}El certificado no ha caducado.")
+
+            """ for algo in cert:
+                print(cert[algo]) """
+            for algo in cert:
+                if algo == "version":
+                    print(f"{B}[DATA] Versión SSL {P}{cert[algo]}")
+                elif algo == "notBefore":
+                    print(f"{B}[DATA] Fecha de inicio del certificado {W}[{P}{cert[algo]}{W}]")
+                elif algo == "notAfter":
+                    print(f"{B}[DATA] Fecha de fin del certificado {W}[{P}{cert[algo]}{W}]")
+                elif algo == "subject":
+                    for subdata in cert[algo]:
+                        for subdatadata in subdata:
+                            print(f"{G}[SUBDATA] {O}DOMAINDATA {W}{subdatadata}")
+                elif algo == "issuer":
+                    for subdata in cert[algo]:
+                            for subdatadata in subdata:
+                                print(f"{G}[SUBDATA] {O}BUNISSESDATA {W}{subdatadata}")
+                
+                elif algo == "subjectAltName":
+                    for subdata in cert[algo]:
+                        for subdatadata in subdata:
+                            print(f"{G}[SUBDATA] {O}DOMAINDATA {W}{subdatadata}")
+                elif algo == "crDistributionPoints":
+                    for subdata in cert[algo]:
+                        for subdatadata in subdata:
+                            print(f"{G}[SUBDATA] {O}DISTRIBUTIONS {subdatadata}")
+
+
+            # encryption algorithms used in the SSL/TLS connection
+            cipher_name, cipher_version, cipher_bits = ssl_sock.cipher()
+            print(f"{G}[INFO] {W}Algoritmo de cifrado SSL/TLS: {P}{cipher_name} ({cipher_bits} bits)")
+            return True
 
 def change_website(url):
     try:
@@ -57,7 +104,8 @@ def main():
 {O}¿Qué desea hacer con la URL? {P}Ctrl+c para salir
 
 {W}[{G}1{W}] {R}Acortar URL
-{W}[{G}2{W}] {R}Probar rendimiento web""")
+{W}[{G}2{W}] {R}Probar rendimiento web
+{W}[{G}3{W}] {R}Verificar Seguridad SSL""")
     op = int(input(f"{C}>>> {W}"))
     url = input(f"{C}URL>>> {G}")
     if op == 1:
@@ -71,6 +119,8 @@ def main():
         clear()
         banner()
         run_test_web(url, num_users)
+    elif op == 3:
+        verify_ssl(url)
     else:
         
         print(f"{R}- {W}URL no valida.")
