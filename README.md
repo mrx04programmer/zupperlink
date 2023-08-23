@@ -20,6 +20,8 @@ El proyecto ZupperLink también cuenta con una funcionalidad para realizar prueb
     🕰️ time: Empleado para medir el tiempo de ejecución de las pruebas de rendimiento web.
     🎟️ pyshorteners: Una biblioteca adicional para acortar URLs utilizando servicios como TinyURL, Bitly, etc.
     🖥️ platform: Utilizado para obtener información sobre la plataforma en la que se ejecuta la aplicación.
+    🌐 socket: proporciona una interfaz para la creación de sockets y la conexión a servidores remotos utilizando diferentes protocolos de red, como TCP o UDP.
+    ☀️ ssl: Esta librería permite establecer conexiones de red cifradas y autenticadas mediante el uso de certificados digitales, lo que garantiza la privacidad y la integridad de los datos transmitidos.
 
 ## Requisitos del Sistema
 Para ejecutar ZupperLink, asegúrate de tener instalada una versión de Python compatible y todas las librerías mencionadas. Además, ten en cuenta que algunas funcionalidades pueden depender de servicios externos, por lo que asegúrate de contar con acceso a Internet.
